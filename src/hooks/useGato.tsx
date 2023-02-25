@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Alert, Button, Text, TouchableOpacity, View } from 'react-native'
-import { styles } from '../themes/appTheme'
-let listado:any = [];
-export const BoxComponent = () => {
+import { Alert } from 'react-native';
 
+export const useGato = () => {
+    let listado:any = [];
     const [turno, setTurno] = useState('X');
     const [btn, setBtn] = useState(false);
     let bandera=true;
@@ -40,7 +39,6 @@ export const BoxComponent = () => {
     }
 
     const pulsar = (identificador: number) => {
-        
         switch (identificador) {
             case 1:
                 (listado[0]=='' || listado[0]==null)? listado[0]=turno : bandera=false;
@@ -75,7 +73,6 @@ export const BoxComponent = () => {
                 Alert.alert('ERROR DESCONOCIDO');
             break;
         }
-
         (turno=='X' && bandera==true)? setTurno('O') : null;
         (turno=='O' && bandera==true)? setTurno('X') : null;
         bandera=true;
@@ -84,81 +81,19 @@ export const BoxComponent = () => {
     }
 
     const again = () => {
-
         for (let index = 0; index < listado.length; index++) {
             listado[index] = null;
         }
-
         setBtn(false);
         setTurno('X');
+    }
 
-    }   
+    return {
+        turno: turno,
+        btn: btn,
+        pulsar: pulsar,
+        again: again,
+        listado: listado[0],
+    }
 
-  return (
-    <View style={styles.conteiner}>
-        <View style={{alignItems: 'center'}}>
-            <Text style={{color:'white', fontSize:35}}>Turno: {turno}</Text>
-        </View>
-        <View style={styles.subContainer}>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(1)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[0]}</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(2)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[1]}</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(3)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[2]}</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
-        <View style={styles.subContainer}>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(4)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[3]}</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(5)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[4]}</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(6)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[5]}</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
-        <View style={styles.subContainer}>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(7)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[6]}</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(8)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[7]}</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity disabled={btn} onPress={() => pulsar(9)}>
-                <View style={styles.box}>
-                    <Text style={styles.txt}>{listado[8]}</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
-        <View style={{marginTop: 40, width: '100%', alignItems: 'center'}}>
-            {
-                (btn==true)?
-                    <TouchableOpacity onPress={() => again()} style={{backgroundColor: 'white', height: 35, width: 150, justifyContent: 'center', alignItems: 'center', borderRadius: 15}}>
-                        <Text style={{fontSize: 20, color:'black'}}>Volver a jugar</Text>
-                    </TouchableOpacity>
-                : null
-            }
-        </View>
-    </View>
-  )
 }
